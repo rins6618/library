@@ -4,15 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="library.js"></script>
+    <script defer src="library.js"></script>
+    <script src="https://kit.fontawesome.com/d74066f640.js" crossorigin="anonymous"></script>
+
     <title>Library</title>
 </head>
 <body>
-    <div class="container grid">
-        <main class="flex">
-            <div></div>
-            <div></div>
-            <div></div>
+    <div class="center grid">
+        <div class="container grid">
+            <header class="grid">
+                <div class="flex library-header">
+                    <h1>The Web Library</h1>
+                    <p><em>Your personal book tracker</em></p>
+                </div>
+                <div></div>
+                <div></div>
+            </header>
+            <main>
+                <ul class="flex">
+                    <li class="flex shelf" data-num-books="0">
+                    </li>
+                </ul>
+            </main>
         </main>
     </div>
 </body>
