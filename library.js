@@ -1,5 +1,10 @@
 const booksAdded = [];
 
+
+const dialog = new DialogBox();
+
+
+
 booksAdded.updateDisplay = function () {
     const shelving = document.querySelector("main>ul");
     let shelves = Array.from(shelving.children);
@@ -15,14 +20,64 @@ booksAdded.updateDisplay = function () {
             }
         }
         if (typeof activeShelf == 'undefined') activeShelf = createShelf(shelving);
-
-
+        
+        
         shelves = Array.from(shelving.children);
         
         activeShelf.dataset.numBooks++;
         booksAdded[idx].element = createBookElement(idx, activeShelf);
     }
+    
+}
 
+
+/** 
+ * @typedef {Object} Book
+ * @property {string} name - Name of the book.
+ * @property {string} author - Author of the book.
+ * @property {number} pageCount - Page count of the book.
+ * @property {boolean} isRead - If the book been read or not.
+ * @property {Element?} element - HTML DOM element of the book.
+ */
+
+
+/**
+ * @class
+ * @param {string} name 
+ * @param {string} author 
+ * @param {number} pageCount 
+ * @param {boolean} isRead 
+ */
+function Book(name, author, pageCount, isRead) {
+    this.name = name;
+    this.author = author;
+    this.pageCount = pageCount;
+    this.isRead = isRead;
+    this.element = undefined;
+}
+
+function DialogBox() {
+    const dialogElement = document.createElement("dialog");
+    
+    dialogElement.classList.add("dialog-popup");
+    document.querySelector("body").appendChild(dialogElement);
+    this.element = dialogElement;
+    this.isModal = true;
+    
+    this.changeParagraph = function(text) {
+        this.element.textContent = "";
+        const paragraphElement = document.createElement("p");
+        paragraphElement.innerText = text;
+        this.element.appendChild(paragraphElement);
+    }
+
+    this.popup = function() {
+        if (this.isModal) {
+            this.element.showModal();
+        } else {
+            this.element.show();
+        }
+    }
 }
 
 function createShelf (shelving){
@@ -69,18 +124,24 @@ function createBookElement (bookIdx, shelf) {
     bookElement.appendChild(pagesElement)
     bookElement.appendChild(coverRElement);
 
+    /** @type {Book}*/
+    const bookObj = booksAdded[bookIdx];
+
+
+    bookElement.addEventListener("click", e => {
+        const bookParagraphStr =
+       `Book Name: "${bookObj.name}"\n
+        Author: "${bookObj.author}"\n
+        Number of pages: ${bookObj.pageCount}\n
+        Has been read: ${bookObj.isRead ? "yes" : "no"}\n`;
+        dialog.changeParagraph(bookParagraphStr);
+        dialog.popup();
+    });
+
     shelf.appendChild(bookElement);
 }
 
-function Book(name, author, pageCount, isRead) {
-    this.name = name;
-    this.author = author;
-    this.pageCount = pageCount;
-    this.isRead = isRead;
-    this.element = undefined;
-}
 
-booksAdded.push(new Book("The Hobbit", "J.R.R. Tolkien", 295, false));
-booksAdded.push({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {});
+booksAdded.push(new Book("The Hobbit", "J.R.R. Tolkien", 295, false), new Book("Where the Red Fern Grows", "WIlson Rawls and Clare Vanderpool", 314, true), new Book("A Dog's Way Home", "W. Bruce Cameron", 141, true));
 
 booksAdded.updateDisplay();
