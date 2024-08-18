@@ -44,6 +44,10 @@ li {
     border: 4px solid lime;
 } */
 
+dialog:focus {
+    outline: none;
+}
+
 
 .center {
     grid-template-columns: 1fr 1250px 1fr;
