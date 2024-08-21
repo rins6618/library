@@ -201,13 +201,7 @@ function createBookElement (bookIdx, shelf) {
 
 
 booksAdded.push(
-    new Book("The Hobbit", "J.R.R. Tolkien", 295, false), 
-    new Book("Where the Red Fern Grows", "WIlson Rawls and Clare Vanderpool", 314, false), 
-    new Book("A Dog's Way Home", "W. Bruce Cameron", 141, true),
-
-    new Book("The Hobbit", "J.R.R. Tolkien", 295, false), 
-    new Book("Where the Red Fern Grows", "WIlson Rawls and Clare Vanderpool", 314, false), 
-    new Book("A Dog's Way Home", "W. Bruce Cameron", 141, true)
+    new Book("The Hobbit", "J.R.R. Tolkien", 295, false)
 );
 
 booksAdded.updateDisplay();
@@ -215,8 +209,8 @@ formSend.addEventListener("click", e => {
     e.preventDefault();
     const nameVal = document.querySelector("#name").value;
     const authorVal = document.querySelector("#author").value;
-    const pagesVal = document.querySelector("#pages").value;
-    const readVal = document.querySelector("#check").value;
+    const pagesVal = document.querySelector("#pages").valueAsNumber;
+    const readVal = document.querySelector("#check").checked;
 
     booksAdded.push(new Book(nameVal, authorVal, pagesVal, readVal));
     booksAdded.updateDisplay();
