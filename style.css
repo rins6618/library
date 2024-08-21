@@ -162,7 +162,15 @@ main > ul {
     height: 95%;
 }
 
-.dialog-popup[open] {
+dialog:not([open]) {
+    user-select: none;
+    z-index: -9;
+    opacity: 0;
+}
+
+dialog[open] {
+    z-index: 9;
+    opacity: 1;
     border-radius: 1rem;
     padding: 4rem;
     width: 70%;
@@ -171,7 +179,7 @@ main > ul {
     inset: 0 0 0 0;
     margin: auto;
     filter: none;
-    border: none;
+    border: 8px #ababab solid;
 }
 
 .dialog-popup::backdrop {
@@ -179,7 +187,7 @@ main > ul {
     opacity: 0.5;
 }
 
-body:has(dialog[open]) {
+body:has(.dialog-popup[open]) {
     animation: blur 0.1s ease-out forwards;
 }
 
@@ -227,4 +235,87 @@ body:has(dialog[open]) {
     padding: 2rem;
     width: 30%;
     cursor: pointer;
+}
+
+#form-dialog {
+    flex-direction: column;
+    align-items: end;
+
+}
+
+#form-close {
+    background-color: hsl(0, 54%, 49%);
+    font-weight: 800;
+    color: white;
+    border-radius: 50%;
+    border: none;
+    justify-content: center;
+    align-items: center;
+    width: 2rem;
+    aspect-ratio: 1 / 1;
+}
+
+#form-close:hover {
+    background-color: hsl(0, 54%, 39%);
+}
+
+
+form {
+    margin-top: auto;
+    flex-direction: column;
+    width: 100%;
+    height: 90%;
+}
+
+.fields {
+    padding: 1rem;
+    grid-template-areas:  "namelabel . authorlabel ." 
+                          "name name author author" 
+                          "pageslabel  .   checklabel ."
+                          "pages  .    check .";
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 2fr 3fr 2fr 3fr;
+    gap: 1rem;
+    width: 100%;
+    height: 12rem
+}
+
+#name {
+    grid-area: name;
+}
+
+label[for="name"] {
+    grid-area: namelabel;
+}
+
+#author {
+    grid-area: author;
+}
+
+label[for="author"] {
+    grid-area: authorlabel;
+}
+
+#pages {
+    grid-area: pages;
+}
+
+label[for="pages"] {
+    grid-area: pageslabel;
+}
+
+#check {
+    grid-area: check;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+}
+
+label[for="check"] {
+    grid-area: checklabel;
+}
+
+legend {
+    margin-left: 4ch;
+    font-weight: 800;
+    padding: 1rem;
 }

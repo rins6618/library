@@ -3,7 +3,13 @@ const booksAdded = [];
 
 const dialog = new DialogBox();
 
+const formDialog = document.querySelector("#form-dialog");
+const formBtn = document.querySelector("#form-button");
+formBtn.addEventListener("click", () => formDialog.show());
+const formCloseBtn = document.querySelector("#form-close");
+formCloseBtn.addEventListener("click", () => formDialog.close());
 
+const formSend = document.querySelector("#form-send");
 
 booksAdded.updateDisplay = function () {
     const shelving = document.querySelector("main>ul");
@@ -13,7 +19,6 @@ booksAdded.updateDisplay = function () {
         if (Number.isNaN(Number(idx))) continue;
         let activeShelf;
         for (let shelf of shelves) {
-            console.log(shelf.dataset.numBooks);
             if (parseInt(shelf.dataset.numBooks) < 7) {
                 activeShelf = shelf;
                 break;
@@ -108,18 +113,8 @@ function DialogBox() {
                 const infoDiv = listElem.querySelector("div");
                 infoDiv.textContent = bookObject.isRead;
             }
-        });
+        })
         
-
-    }
-
-    this.formBook = function() {
-        this.element.replaceChildren();
-        const formElem = document.createElement("form");
-        const nameInput = document.createElement("input");
-        const authorInput = document.createElement("input");
-        const pageInput = document.createElement("input");
-        const readInput = document.createElement("input");
 
     }
 
@@ -216,9 +211,14 @@ booksAdded.push(
 );
 
 booksAdded.updateDisplay();
+formSend.addEventListener("click", e => {
+    e.preventDefault();
+    const nameVal = document.querySelector("#name").value;
+    const authorVal = document.querySelector("#author").value;
+    const pagesVal = document.querySelector("#pages").value;
+    const readVal = document.querySelector("#check").value;
 
-const addBookBtn = document.querySelector("#form-button");
-addBookBtn.addEventListener("click", e => {
-    dialog.formBook();
-    dialog.popup();
-})
+    booksAdded.push(new Book(nameVal, authorVal, pagesVal, readVal));
+    booksAdded.updateDisplay();
+    formDialog.close();
+});

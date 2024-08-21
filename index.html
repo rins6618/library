@@ -19,6 +19,19 @@
                 </div>
                 <div class="flex button-container">
                     <button class="flex" id="form-button"> Add a book</button>
+                    <dialog id="form-dialog" class="flex">
+                        <button id="form-close" class="flex">X</button>
+                        <form action="set">
+                            <fieldset class="flex">
+                                <legend>Fill the book information fields: </legend>
+                                <div class="fields grid">
+                                    <input type="text" id="name"><input type="text" id="author"><input type="number" id="pages"><input type="checkbox" id="check">
+                                    <label for="name">Name:</label><label for="author">Author:</label><label for="pages">No. of pages:</label><label for="check">Been read: </label>
+                                </div>
+                            </fieldset>
+                            <button class="flex" id="form-send">Add book</button>
+                        </form>
+                    </dialog>
                 </div>
             </header>
             <main>
