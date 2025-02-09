@@ -1,5 +1,5 @@
+/** @type {Book[]} */
 const booksAdded = [];
-
 
 const dialog = new DialogBox();
 
@@ -207,12 +207,43 @@ booksAdded.push(
 booksAdded.updateDisplay();
 formSend.addEventListener("click", e => {
     e.preventDefault();
-    const nameVal = document.querySelector("#name").value;
-    const authorVal = document.querySelector("#author").value;
-    const pagesVal = document.querySelector("#pages").valueAsNumber;
-    const readVal = document.querySelector("#check").checked;
 
-    booksAdded.push(new Book(nameVal, authorVal, pagesVal, readVal));
-    booksAdded.updateDisplay();
-    formDialog.close();
+    /** @type {HTMLInputElement[]} */
+    const elems = [
+        document.querySelector("#name"), 
+        document.querySelector("#author"),
+        document.querySelector("#pages"),
+        document.querySelector("#check")
+    ];
+
+    const [name, author, pages, read] = elems;
+
+    /** @type {string} */
+    const nameVal = name.value || '';
+    /** @type {string} */
+    const authorVal = author.value || '';
+    /** @type {number} */
+    const pagesVal = pages.valueAsNumber || 0;
+    /** @type {boolean} */
+    const readVal = read.checked || false;
+
+    let valid = elems.every((element) => {
+        return element.validity.valid;
+    });
+
+    elems.forEach((elem) => elem.value = '');
+    if (valid) {
+        booksAdded.push(new Book(nameVal, authorVal, pagesVal, readVal));
+        booksAdded.updateDisplay();
+        formDialog.close();
+        return;
+    }
+
+    /** @type {HTMLButtonElement} */
+    const button = document.querySelector('#form-send');
+    button.textContent = 'Invalid data!';
+    setTimeout(() => {
+        button.textContent = 'Add book';
+    }, 1000);
+    
 });
